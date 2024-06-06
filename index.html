@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="js/firebase.js"></script>
+    <script src="js/app.js" defer></script>
+    <script type="module" src="js/formRegistro.js" defer></script>
+    <script type="module" src="js/formIniciarSesion.js" defer></script>
+    <script type="module" src="js/main.js" defer></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <title>Biblioteca ISP20</title>
+</head>
+<body id="body">
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container">
+              <a class="navbar-brand" href="#">Biblioteca ISP20</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#iniciarSesionModal">Iniciar sesión</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#RegistrarseModal">Registrarse</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+    </header>
+    
+    <div class="container">
+      <button class="btn btn-primary" 
+        data-bs-toggle="modal" 
+        data-bs-target="#agregarEditarModal">
+        Agregar Libro
+      </button>
+    </div>
+
+    <main class="container" id="contenedorlibros">
+    </main>
+    
+    <footer class="container">
+        <div class="card text-center">
+            <div class="card-header">
+              Ingeniería de Software 2023
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">1º Año Técnico Superior en Desarrollo de Software</h5>
+              <p class="card-text">Instituto Superior de Profesorado Nº20</p>
+            </div>
+            <div class="card-footer text-body-secondary">
+              San Justo - Santa Fe
+            </div>
+          </div>
+    </footer>
+
+
+    <!-- Modal agregar editar libros-->
+    <div class="modal fade" id="agregarEditarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar/Editar libro</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="agregarEditarForm" onsubmit="return false;">
+              <input type="hidden" id="txtId">
+              <label for="txtNombre" class="form-label">Nombre:</label>
+              <input type="text" id="txtNombre" class="form-control mb-3"  required>
+              <label for="txtPaginas" class="form-label">Páginas:</label>
+              <input type="number" id="txtPaginas" class="form-control mb-3" required>
+              <label for="txtAutor" class="form-label">Autor:</label>
+              <input type="text" id="txtAutor" class="form-control mb-3">
+              <label for="txtEditorial" class="form-label">Editorial:</label>
+              <input type="text" id="txtEditorial" class="form-control mb-3">
+              <label for="txtPortadaUrl" class="form-label">Url de la portada:</label>
+              <input type="text" id="txtPortadaUrl" class="form-control mb-3">
+              <label for="txtSinopsis" class="form-label">Sinopsis:</label>
+              <textarea id="txtSinopsis" class="form-control mb-3" rows="3"></textarea>
+              <label for="txtGenero" class="form-label">Genero:</label>
+              <input type="text" id="txtGenero" class="form-control mb-3">
+              <input type="submit" value="Enviar" class="form-control btn btn-primary" onclick="applibros.guardarLibro();">
+              
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+<div class="modal fade" id="iniciarSesionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Iniciar Sesión</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="IniciarSesionForm">
+            <label for="txtEmail" class="form-label">Email</label>
+            <input type="text" id="txtEmail" class="form-control mb-3" required>
+            <label for="txtPassword" class="form-label">Contraseña</label>
+            <input type="password" id="txtPassword" class="form-control" required>
+            <input type="submit" value="Enviar" class="form-control btn btn-primary mt-3">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="RegistrarseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Cuenta</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="registroform">
+              <label for="txtEmail" class="form-label">Email</label>
+              <input type="text" id="txtEmail" class="form-control mb-3" required>
+              <label for="txtPassword" class="form-label">Contraseña</label>
+              <input type="password" id="txtPassword" class="form-control" required>
+              <input type="submit" value="Registrarse" class="form-control btn btn-primary mt-3">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</body>
+</html>
